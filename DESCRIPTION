@@ -1,0 +1,35 @@
+Package: FlowStats
+Type: Package
+Title: Near real time streamflow statistics for Germany
+Version: 0.0.1
+Author: Tam V. Nguyen
+Maintainer: Tam V. Nguyen <tamnva@gmail.com>
+Description: Near real time streamflow statistical analysis for Germany based on:
+    Near real time meterological data from German Weather Service
+    Deep learning (LSTM) rainfall runoff model for streamflow simulation
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+URL: https://github.com/tamnva/R-SWAT
+BugReports: https://github.com/tamnva/R-SWAT/issues
+Depends: R (>= 4.0)
+License: GPL (>= 3)
+Imports: 
+    sf (>=  1.0.20),
+    leaflet (>= 2.2.2),
+    ggplot2 (>= 3.5.2),
+    shiny (>= 1.9.1),
+    dplyr (>= 4.10.4),
+    plotly (>= 4.10.4),
+    lubridate (>= 1.9.3),
+    bslib (>= 0.8.0),
+    data.table (>= 1.16.0),
+    exactextractr (>= 0.10.0),
+    terra (>= 1.8.42),   
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+SystemRequirements: Python executable files for streamflow simulation
