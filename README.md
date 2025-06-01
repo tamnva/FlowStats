@@ -3,7 +3,7 @@
 
 - This is an R package (with Graphical User Interface - GUI) for near real time streamflow statistical analysis (1-day delay) using Long-Short-Term Memory (LSTM) rainfall-runoff model and near-real-time meterological data ([daily precipitation, temperature, and relative humidity](https://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/hyras_de/)) from the German Weather Service (DWD).
 - The LSTM model achieves a median NSE of 0.8 on the test period (2010–2020) across 1,566 basins in the [CAMELS-DE](https://essd.copernicus.org/articles/16/5625/2024/essd-16-5625-2024.html) dataset.
-- The simulated streamflow data (01.1980 - 5.2015) are used as default for statistical streamflow analysis (this data can be updated to get near real time streamflow data).
+- The simulated streamflow data (01.1980 - 5.2025) are used as default for statistical streamflow analysis (this data can be updated to get near real time streamflow data).
 
 ### Installation
 
