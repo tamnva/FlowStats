@@ -28,6 +28,7 @@ Imports:
     terra (>= 1.8-42), 
     readr (>= 2.1.5)
     tibble (>= 3.2.1)
+    spsComps (>= 0.3.3.0)
 Suggests: 
     knitr,
     rmarkdown,

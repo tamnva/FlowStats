@@ -206,7 +206,18 @@ calculate_flowstats <- function(Q_input, period, gaugeid, fun){
         dplyr::summarise(percentiles = 100*ecdf(Q_cms_aggregate)(
           Q_input_year$Q_cms_aggregate[iloc]))
 
-      percentiles$percentiles[i] <- temp$percentiles
+      min_max <- Q_input_aggregate %>%
+        dplyr::filter(gauge_id == gaugeid[i]) %>%
+        dplyr::summarise(min = min(Q_cms_aggregate),
+                         max = max(Q_cms_aggregate))
+
+      if (Q_input_year$Q_cms_aggregate[iloc] == min_max$min){
+        percentiles$percentiles[i] = 0.0
+      } else if (Q_input_year$Q_cms_aggregate[iloc] == min_max$max){
+        percentiles$percentiles[i] = 100.0
+      } else{
+        percentiles$percentiles[i] <- temp$percentiles
+      }
 
     }})
 
@@ -262,15 +273,36 @@ plot_flowstats <- function(Q_input, period, gaugeid, fun){
 
   isort <- sort(Q_input_aggregate$Q_cms_aggregate, index.return=TRUE)
   Q_input_aggregate <- Q_input_aggregate[isort$ix,]
-  Q_input_aggregate$percentile <- 100*round(c(1:nrow(Q_input_aggregate))/(nrow(Q_input_aggregate) + 1), 4)
-  Q_current_year$percentile <- round(100*ecdf(Q_input_aggregate$Q_cms_aggregate)(Q_current_year$Q_cms_aggregate), 2)
+  Q_input_aggregate$percentile <- 100*round(c(1:nrow(Q_input_aggregate))/(
+    nrow(Q_input_aggregate) + 1), 4)
+
+  if (Q_current_year$Q_cms_aggregate <=
+      Q_input_aggregate$Q_cms_aggregate[1]){
+
+    Q_current_year$percentile <- Q_input_aggregate$percentile[1]
+    pcolor_current_year <- "#420b2c"
+
+  } else if (Q_current_year$Q_cms_aggregate >=
+             Q_input_aggregate$Q_cms_aggregate[nrow(Q_input_aggregate)]){
+
+    Q_current_year$percentile <-
+      Q_input_aggregate$percentile[nrow(Q_input_aggregate)]
+    pcolor_current_year <- "#023903"
+
+  } else {
+
+    Q_current_year$percentile <- round(100*ecdf(Q_input_aggregate$Q_cms_aggregate)(
+      Q_current_year$Q_cms_aggregate), 2)
+    pcolor_current_year <- pcolor(Q_current_year$percentile)
+  }
+
 
   plt <- ggplot(Q_input_aggregate,
                 aes(x = Q_cms_aggregate, y = percentile, label = year)) +
     geom_point(alpha = 0.5, size = 1) +
     geom_line(alpha = 0.5, linewidth = 0.5) +
     geom_point(data = Q_current_year, aes(x = Q_cms_aggregate, y = percentile),
-               color=pcolor(Q_current_year$percentile), size = 2) +
+               color=pcolor_current_year, size = 2) +
     labs(x = fun, y = "Non-exceedance probability (%)") +
     theme_bw() +
     theme(axis.title=element_text(size=8))

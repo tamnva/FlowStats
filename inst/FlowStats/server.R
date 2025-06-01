@@ -128,11 +128,14 @@ function(input, output, session) {
         pcolor <- colorBin(palette = color,bins = c(0, 95, 99, 100))
         pcolor <- pcolor(q_percentiles$percentiles)
         ptitle <- "Streamflow classification"
-        plabels <- c("No flood", "Servere hydrologic flood", "Extreme hydrologic flood")
+        plabels <- c("No flood", "Servere hydrologic flood",
+                     "Extreme hydrologic flood")
 
       } else {
+
+        # In the function to calculate q_percentile I set percentile = 0 for min value
         color <- c("#420b2c", "#841859","#D01C8B", "#F1B6DA", "#ffffff")
-        pcolor <- colorBin(palette = color,bins = c(0, 0.1, 5, 10, 25, 100)) # change 0.1 to lowest
+        pcolor <- colorBin(palette = color,bins = c(0, 0.0001, 5, 10, 25, 100))
         pcolor <- pcolor(q_percentiles$percentiles)
         plabels <- c("Extreme hydrologic drought",
                      "Servere hydrologic drought",
@@ -144,11 +147,11 @@ function(input, output, session) {
       color <- c("#420b2c", "#D01C8B", "#F1B6DA", "#D0EBAB",
                  "#9CCE64","#276419", "#023903")
 
-      # Due to uncertainty in simulation, percentiles < 0.01% and > 99.99% are
-      # lowest and highest values
+      # In the function to calculate q_percentile I set percentile = 0 for min value
+      # and = 100.0 for max value
 
       pcolor <- colorBin(palette = color,
-                         bins = c(0, 0.01, 10, 25, 75, 90, 99.99, 100))
+                         bins = c(0, 0.0001, 10, 25, 75, 90, 99.9999, 100))
       pcolor <- pcolor(q_percentiles$percentiles)
       plabels <- c("Lowest","Much below normal", "Below normal", "Normal",
                    "Above normal", "Much above normal", "Highest")
@@ -206,12 +209,18 @@ function(input, output, session) {
     req(input$station_visual)
     req(input$map_marker_click)
 
-    if (!is.null(input$map_marker_click$id) &
-                 input$navset == "All gauges" ){
+    # Save project setting
+    spsComps::shinyCatch(
+      if (!is.null(input$map_marker_click$id) &
+          input$navset == "All gauges" ){
         plt <- plot_flowstats(Q_data, input$date_range, input$map_marker_click$id,
                               input$station_visual)
         output$plot_spatial <- plotly::renderPlotly({plotly::ggplotly(plt)})
-    }
+      },
+      blocking_level = "error"
+    )
+
+
   })
 
   #-----------------------------------------------------Show plot when map click
