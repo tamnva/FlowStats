@@ -15,20 +15,20 @@ BugReports: https://github.com/tamnva/FlowStats/issues
 Depends: R (>= 4.0)
 License: GPL (>= 3)
 Imports: 
-    sf (>=  1.0.20),
-    leaflet (>= 2.2.2),
-    ggplot2 (>= 3.5.2),
+    sf (>= 1.0-5),
+    leaflet (>= 2.0.4.1),
+    ggplot2 (>= 3.4.4),
     shiny (>= 1.8.0),
-    dplyr (>= 1.1.4),
+    dplyr (>= 1.1.2),
     plotly (>= 4.10.4),
-    lubridate (>= 1.9.3),
+    lubridate (>= 1.8.0),
     bslib (>= 0.8.0),
-    data.table (>= 1.16.0),
+    data.table (>= 1.14.8),
     exactextractr (>= 0.10.0),
-    terra (>= 1.8-42), 
-    readr (>= 2.1.5),
+    terra (>= 1.5-17), 
+    readr (>= 2.1.2),
     tibble (>= 3.2.1),
-    spsComps (>= 0.3.3.0)
+    spsComps (>= 0.3.2.1)
 Suggests: 
     knitr,
     rmarkdown,
