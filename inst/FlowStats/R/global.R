@@ -3,8 +3,6 @@ library(FlowStats)
 library(ggplot2)
 library(shiny)
 
-setwd("C:/Users/nguyenta/Documents/GitHub/FlowStats/inst/FlowStats")
-
 # Read shape files of gauges and basins
 stations <- sf::read_sf(file.path("data", "de_stations.shp"))
 basins <- sf::read_sf(file.path("data", "de_basins.shp"))
@@ -309,25 +307,3 @@ plot_flowstats <- function(Q_input, period, gaugeid, fun){
 
   return(plt)
 }
-
-
-#calculate_flowstats(Q_input, period, gaugeid, ifunction)
-
-#period <- c(as.Date("2025-04-01"), as.Date("2025-04-30"))
-#gauge_id <- stations$gauge_id
-
-#period_stat_value <- period_stat(Q_data, c(as.Date("2025-04-01"), as.Date("2025-04-30")), stations$gauge_id)
-
-#pcolor <- period_stat_value$color
-
-#"DEA11100"
-#"77.81109"
-#"#023903"
-#"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2" "#D55E00" "#CC79A7" "#999999"
-#"#492050" "#90529C" "#C490CF" "#E4CAE9" "#F1F1F1" "#BCDABC" "#72B173" "#2C792D" "#023903"
-#"#4A6FE3" "#788CE1" "#9DA8E2" "#C0C5E3" "#E2E2E2" "#E6BCC3" "#E495A5" "#DD6D87" "#D33F6A"
-#"#841859" "#D05196" "#F398C4" "#FFD0E8" "#F6F6F6" "#C1E9C1" "#7CC57D" "#129416" "#005600"
-
-#colnames(Q_data) <- c("STATION_NUMBER", "Date", "Value")
-#calc_annual_lowflows(data = Q_data %>% filter(STATION_NUMBER == "DE110000",
-#                                              Date > as.Date("2000-01-01")))
