@@ -186,10 +186,10 @@ calculate_flowstats <- function(Q_input, period, gaugeid, fun){
                        .groups = 'drop')
 
     Q_input_year <- Q_input_aggregate %>%
-      dplyr::filter(year == year(period[1]))
+      dplyr::filter(year == lubridate::year(period[1]))
   }
 
-  percentiles <- tibble(gauge_id = gaugeid, percentiles = NA)
+  percentiles <- tibble::tibble(gauge_id = gaugeid, percentiles = NA)
   ngauges <- length(gaugeid)
 
 

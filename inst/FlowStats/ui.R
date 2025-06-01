@@ -47,13 +47,21 @@ navbarPage(
             column(
               width = 12,
               selectInput(
-                "plot_type", "Select plot type ",
+                "plot_type", "Select plot type",
                 list("Daily", "Daily (by year)", "Daily cumsum (by year)")
               ),
 
               checkboxInput('log_y', 'Log y-axis', value = 0),
 
-              plotly::plotlyOutput("input_data", height = 220)
+              h5("Click to the gauge location on leaflet to see plot"),
+
+              plotly::plotlyOutput("input_data", height = 220),
+
+              tags$div(style="margin-bottom:30px; margin-top:10px;",
+                              actionButton('plot_explaination',
+                                           'Plot explaination')
+              ),
+
             ),
           ),
 
@@ -78,8 +86,11 @@ navbarPage(
 
                 selectInput("percentile_class",
                             "Q percentile classes",
-                            list("All", "Flood","Drought"))
+                            list("All", "Flood","Drought")),
+
+                h5("Click to the gauge location on leaflet to see plot"),
                            ),
+
 
               conditionalPanel(
                 condition = "input.station_visual != 'Q_last_day'",
@@ -90,15 +101,20 @@ navbarPage(
                   max = tail(Q_data, 1)$date,
                   start = paste0(lubridate::year(tail(Q_data, 1)$date), "-01-01"),
                   end = tail(Q_data, 1)$date),
+
+                h5("Click to the gauge location on leaflet to see plot"),
                 ),
 
 
             column(width = 12, plotly::plotlyOutput("plot_spatial", height = 200))),
 
             tags$div(style="margin-bottom:20px; margin-top:10px;",
-                     column(width = 12,
+                     column(width = 6,
                             actionButton('visualize_gauge',
-                                         'Click to apply to all gauges'))
+                                         'Click to apply to all gauges')),
+                     column(width = 6,
+                            actionButton('gauge_plot_explaination',
+                                         'Plot explaination')),
             ),),
         ),
       ),

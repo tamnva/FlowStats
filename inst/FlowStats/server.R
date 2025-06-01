@@ -91,6 +91,13 @@ function(input, output, session) {
   #----------------------------------------------------------------------------#
   observeEvent(input$visualize_gauge, {
 
+    showModal(modalDialog(
+      title = "Apply to all gauges",
+      HTML(readLines("data/html/message_plot_all_gauges.html",
+                     warn = FALSE) |> paste(collapse = "\n")),
+      easyClose = TRUE
+    ))
+
     if(input$station_visual == "Q_last_day"){
       date_range <- c(tail(Q_data, 1)$date, tail(Q_data, 1)$date)
     } else {
@@ -111,7 +118,7 @@ function(input, output, session) {
         # Due to uncertainty in simulation, percentiles < 0.1% and > 99.9% are
         # lowest and highest values
         pcolor <- colorBin(palette = color,
-                           bins = c(0, 0.01, 10, 25, 75, 90, 99.99, 100))
+                           bins = c(0, 1, 10, 25, 75, 90, 99, 100))
         pcolor <- pcolor(q_percentiles$percentiles)
         plabels <- c("Lowest","Much below normal", "Below normal", "Normal",
                      "Above normal", "Much above normal", "Highest")
@@ -125,7 +132,7 @@ function(input, output, session) {
 
       } else {
         color <- c("#420b2c", "#841859","#D01C8B", "#F1B6DA", "#ffffff")
-        pcolor <- colorBin(palette = color,bins = c(0, 0.1, 5, 10, 25, 100))
+        pcolor <- colorBin(palette = color,bins = c(0, 0.1, 5, 10, 25, 100)) # change 0.1 to lowest
         pcolor <- pcolor(q_percentiles$percentiles)
         plabels <- c("Extreme hydrologic drought",
                      "Servere hydrologic drought",
@@ -222,5 +229,30 @@ function(input, output, session) {
       }
     }
 
+  })
+
+  #------------------------------------------------Explain the single gauge plot
+  observe({
+    req(input$plot_explaination)
+
+    showModal(modalDialog(
+      title = "Plot explaination",
+      HTML(readLines("data/html/plot_explaination.html",
+                     warn = FALSE) |> paste(collapse = "\n")),
+      easyClose = TRUE
+    ))
+  })
+
+
+  #---------------------------------------------------Explain the all gauge plot
+  observe({
+    req(input$gauge_plot_explaination)
+
+    showModal(modalDialog(
+      title = "Plot explaination",
+      HTML(readLines("data/html/gauge_plot_explaination.html",
+                     warn = FALSE) |> paste(collapse = "\n")),
+      easyClose = TRUE
+    ))
   })
 }

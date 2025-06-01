@@ -27,6 +27,7 @@ Imports:
     exactextractr (>= 0.10.0),
     terra (>= 1.8-42), 
     readr (>= 2.1.5)
+    tibble (>= 3.2.1)
 Suggests: 
     knitr,
     rmarkdown,
