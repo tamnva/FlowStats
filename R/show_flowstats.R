@@ -16,12 +16,12 @@
 #'
 #' @export
 #'
-FlowStatsGUI <- function(){
+show_flowstats <- function(){
   # Path to FlowStats app
-  appDir <- system.file("FlowStats", package = "FlowStats")
+  app_path <- system.file("FlowStats", package = "FlowStats")
 
   # Run app
-  shiny::runApp(appDir, display.mode = "normal")
+  shiny::runApp(app_path, display.mode = "normal")
 }
 
 

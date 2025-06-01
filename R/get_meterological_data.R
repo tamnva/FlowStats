@@ -1,13 +1,11 @@
-#' Get historical most recent daily gridded HYDRAS hydrological data (including
+#' Get  most recent daily gridded HYDRAS hydrological data (including
 #' precipitation, tempearture min and max, humidity) from the Deutsche
 #' Wetterdienst
 #'
 #' @param years integer vector, list of all years that users want to download.
 #' Each file of the HYDRAS data contains 1 calendar year. Since the base data
-#' already have simulated streamflow up to 2025. Therefore, users should only
-#' download data from since 2024 (model need warm-up time so only simulated data
-#' after 2024 are used and updated to the base data. By default, if year is not
-#' given, the default year is from c(2024:year(Sys.Date()))
+#' already have simulated streamflow from 1980 to 2025. Therefore, users only
+#' need to download data from 2025
 #'
 #' @param data_dir path to save downloaded data, if not given, the temporary path
 #' will be used
@@ -17,12 +15,13 @@
 
 #' @examples
 #'
-#' download_dwd <- get_de_hist(years=NA, data_dir=NA)
+#' meterological_data <- get_meterological_data(years = NA, data_dir = NA)
 #'
 #' @export
 #'
 
-get_de_hist <- function(years=NA, data_dir=NA){
+# devtools::document()
+get_meterological_data <- function(years = NA, data_dir = NA){
 
   options(timeout=3600)
 

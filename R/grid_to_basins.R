@@ -1,26 +1,22 @@
 #' Extract gridded HYDRAS hydrological data and aggregate at the basins levels
 #'
-#' @param year integer vector, list of all years that users want to download.
-#' Each file of the HYDRAS data contains 1 calendar year. Since the base data
-#' already have simulated streamflow up to 2025. Therefore, users should only
-#' download data from since 2024 (model need warm-up time so only simulated data
-#' after 2024 are used and updated to the base data. By default, if year is not
-#' given, the default year is from c(2024:year(Sys.Date()))
+#' @param years integer vector, list of all years of the downloaded HYDRAS data
 #'
-#' @param data_dir path to save downloaded data, if not given, the temporary path
-#' will be used
+#' @param data_dir path to save extracted data
 #'
-#' @return a list object, containing information about the downloaded files,
-#' years, and path to the downloaded data
+#' @param basins shape file object of basins
+#'
+#' @return a list object, containing extract data for each basin
 
 #' @examples
 #'
-#' download_dwd <- get_de_hist(years=NA, data_dir=NA)
+#' basin_data <- grid_to_basin(years = c(2024:2025), data_dir = tempdir(),
+#'                            basins)
 #'
 #' @export
 #'
 
-grid_to_basins <- function(years, data_dir, basins){
+grid_to_basin <- function(years, data_dir, basins){
 
   file_name <- "_hyras_1_year_v6-0_de.nc"
   file_name_prefix <- c("pr", "tasmin", "tasmax", "hurs")
