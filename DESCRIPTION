@@ -19,7 +19,7 @@ Imports:
     sf (>= 1.0-5),
     leaflet (>= 2.0.4.1),
     ggplot2 (>= 3.4.4),
-    shiny (>= 1.8.0),
+    shiny (>= 1.6.0),
     dplyr (>= 1.1.2),
     plotly (>= 4.10.4),
     lubridate (>= 1.8.0),
