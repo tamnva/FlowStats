@@ -78,6 +78,13 @@ function(input, output, session) {
 
 
   })
+  #----------------------------------------------------------------------------#
+  #                                Update data                                #
+  #----------------------------------------------------------------------------#
+  output$update_data <- renderText({
+    HTML(readLines("data/html/update_data.html",
+                   warn = FALSE) |> paste(collapse = "\n"))
+  })
 
   #----------------------------------------------------------------------------#
   #                      Visualize all gauges                                  #

@@ -1,0 +1,6 @@
+<p><strong>Update meterological and streamflow data!</strong></p>
+<p><span style="background-color: #ff99cc;">This is under construction (will be available soon)</span>. You can skip this step — the current database already contains data from January 1980 to May 2025. Essentially, this covers the following steps::</p>
+<ol>
+<li>Download near real time gridded meterological data (1-day delay) from <a href="https://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/hyras_de/">DWD</a> using R functions in this package.</li>
+<li>Run the LSTM model (in Python) to get simulated streamflow in near real time.</li>
+</ol>

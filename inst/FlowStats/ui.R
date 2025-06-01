@@ -33,8 +33,28 @@ navbarPage(
             ),
 
           #--------------------------------------------------------Update Q data
-          bslib::nav_panel("Update data"
+          bslib::nav_panel(
+            title = "Update data",
 
+            column(width = 12,
+                   htmlOutput("update_data")),
+          ),
+
+          #-----------------------------------------------Visualize single gauge
+          bslib::nav_panel(
+            "Single gauge",
+
+            column(
+              width = 12,
+              selectInput(
+                "plot_type", "Select plot type ",
+                list("Daily", "Daily (by year)", "Daily cumsum (by year)")
+              ),
+
+              checkboxInput('log_y', 'Log y-axis', value = 0),
+
+              plotly::plotlyOutput("input_data", height = 220)
+            ),
           ),
 
           #-------------------------------------------------Visualize all gauges
@@ -80,23 +100,6 @@ navbarPage(
                             actionButton('visualize_gauge',
                                          'Click to apply to all gauges'))
             ),),
-
-          #-----------------------------------------------Visualize single gauge
-          bslib::nav_panel(
-            "Single gauge",
-
-            column(
-              width = 12,
-              selectInput(
-                "plot_type", "Select plot type ",
-                list("Daily", "Daily (by year)", "Daily cumsum (by year)")
-                ),
-
-              checkboxInput('log_y', 'Log y-axis', value = 0),
-
-              plotly::plotlyOutput("input_data", height = 220)
-            ),
-          ),
         ),
       ),
     ),
