@@ -13,7 +13,7 @@ remotes::install_github("tamnva/FlowStats", force = TRUE, dependencies = TRUE)
 
 # Load FlowStats and Show FlowStats graphical user interface
 library(FlowStats)
-show_flowstats()
+showFlowStats()
 ```
 
 ### FlowStats GUI

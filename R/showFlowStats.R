@@ -9,14 +9,14 @@
 #' @examples
 #'
 #'\dontrun{
-#' show_flowstats()
+#' showFlowStats()
 #' }
 #'
 #'@importFrom shiny runApp
 #'
 #' @export
 #'
-show_flowstats <- function(){
+showFlowStats <- function(){
   # Path to FlowStats app
   app_path <- system.file("FlowStats", package = "FlowStats")
 
