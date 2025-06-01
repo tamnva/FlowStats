@@ -15,7 +15,9 @@
 
 #' @examples
 #'
+#'\dontrun{
 #' meterological_data <- get_meterological_data(years = NA, data_dir = NA)
+#' }
 #'
 #' @export
 #'
@@ -25,7 +27,7 @@ get_meterological_data <- function(years = NA, data_dir = NA){
 
   options(timeout=3600)
 
-  if (is.na(years)) years <- 2024:year(Sys.Date())
+  if (is.na(years)) years <- c(2024:lubridate::year(Sys.Date()))
   if (is.na(data_dir)) {
     data_dir <- tempdir()
     message(paste0("Downloaded data is saved to: ", data_dir))
@@ -45,7 +47,7 @@ get_meterological_data <- function(years = NA, data_dir = NA){
       file_name_update <- paste0(file_name_prefix[i], file_name)
       file_name_update <- gsub("year", yr, file_name_update)
 
-      download.file(file.path(base_link_update, file_name_update),
+      utils::download.file(file.path(base_link_update, file_name_update),
                     file.path(data_dir, file_name_update), mode="wb")
 
     }

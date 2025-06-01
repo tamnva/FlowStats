@@ -27,9 +27,6 @@ ptitle <- "NSE"
 #------------------------------------------------------------------------------#
 
 plot_streamflow <- function(input_data, gaugeid, plot_type, log_y){
-  #input_data <- Q_data
-  #gaugeid <-  "DE213680"
-  #plot_type = "Daily (by year)"
   Q_gauge_id <- input_data %>%
     dplyr::filter(gauge_id == gaugeid)
 
@@ -152,12 +149,6 @@ plot_streamflow <- function(input_data, gaugeid, plot_type, log_y){
 #------------------------------------------------------------------------------#
 calculate_flowstats <- function(Q_input, period, gaugeid, fun){
 
-  #Q_input <- Q_data
-  #period <- as.Date(c("2025-01-01", "2025-05-18"))
-  #gaugeid <- stations$gauge_id
-  #fun <- "Q_mean (daily)"
-  # "DED11490"
-
   if(fun == "Q_min (selected period)"){
     assign("agg_func", min)
   } else if (fun == "Q_mean (selected period)") {
@@ -227,12 +218,6 @@ calculate_flowstats <- function(Q_input, period, gaugeid, fun){
 #------------------------------------------------------------------------------#
 
 plot_flowstats <- function(Q_input, period, gaugeid, fun){
-
-  #Q_input <- Q_data
-  #period <- as.Date(c("2025-01-01", "2025-05-18"))
-  #gaugeid <- stations$gauge_id
-  #fun <- "Q_mean (daily)"
-  #gaugeid = "DED11490"
 
   Q_input <- Q_input %>% dplyr::filter(gauge_id == gaugeid)
 

@@ -8,8 +8,8 @@
 
 #' @examples
 #'
-#'\donttest{
-#' FlowStats()
+#'\dontrun{
+#' show_flowstats()
 #' }
 #'
 #'@importFrom shiny runApp

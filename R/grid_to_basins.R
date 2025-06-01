@@ -10,8 +10,11 @@
 
 #' @examples
 #'
+#'\dontrun{
 #' basin_data <- grid_to_basin(years = c(2024:2025), data_dir = tempdir(),
 #'                            basins)
+#' }
+
 #'
 #' @export
 #'
@@ -31,12 +34,12 @@ grid_to_basin <- function(years, data_dir, basins){
         data_dir, gsub("year", yr, paste0(file_name_prefix[i], file_name)))
 
       # Get data
-      data <- rast(file_name_update)
+      data <- terra::rast(file_name_update)
 
-      if (yr == years[1]) basins <- st_transform(basins, crs(data))
+      if (yr == years[1]) basins <- sf::st_transform(basins, sf::st_crs(data))
 
       # Extract data
-      data <- exact_extract(data, basins, fun = 'mean')
+      data <- exactextractr::exact_extract(data, basins, fun = 'mean')
 
       data <- t(data.frame(data))
       colnames(data) <- basins$gauge_id

@@ -18,13 +18,16 @@
 
 #' @examples
 #'
-#' old_data_file <- "C:/Users/nguyenta/Documents/GitHub/FlowStat/data/lstm_data/time_series.csv"
-#' basins <- read_sf("C:/Users/nguyenta/Documents/GitHub/FlowStat/data/de_basins.shp")
+#'\dontrun{
+#' old_data_file <- "your_path/time_series.csv"
+#' basins <- read_sf("your_path/de_basins.shp")
 #' update_data(old_data_file, basins, years = NA, data_dir = NA)
 #'
-#' @export
 #'
-
+#' }
+#' @export
+#' @importFrom stats time
+#'
 update_data <- function(old_data_file, basins, years = NA, data_dir = NA){
 
   message("Downloading historical data")
@@ -36,9 +39,12 @@ update_data <- function(old_data_file, basins, years = NA, data_dir = NA){
                                                  basins)
   message("Reading historical data")
 
-  old_data <- read_csv(old_data_file,
-                 col_types = cols(time = col_datetime(format = "%Y-%m-%d %H:%M"))
-                 )
+  old_data <- readr::read_csv(
+    old_data_file,
+    col_types = readr::cols(
+      time = readr::col_datetime(format = "%Y-%m-%d %H:%M")
+      )
+  )
 
   old_data <- subset(old_data, time < historical_data_basin_extract[["date"]][1])
 
@@ -52,31 +58,33 @@ update_data <- function(old_data_file, basins, years = NA, data_dir = NA){
     message(paste("Updating gauge:", gauge))
     col <- which(colnames(historical_data_basin_extract[["pr"]]) == gauge)
 
-    new_data <- tibble(object_id = gauge,
-           time = historical_data_basin_extract[["date"]],
-           pr = historical_data_basin_extract[["pr"]][,col],
-           tasmin = historical_data_basin_extract[["tasmin"]][,col],
-           tasmax = historical_data_basin_extract[["tasmax"]][,col],
-           hurs  = historical_data_basin_extract[["hurs"]][,col],
-           discharge_spec_obs = NA)
+    new_data <- tibble::tibble(
+      object_id = gauge,
+      time = historical_data_basin_extract[["date"]],
+      pr = historical_data_basin_extract[["pr"]][,col],
+      tasmin = historical_data_basin_extract[["tasmin"]][,col],
+      tasmax = historical_data_basin_extract[["tasmax"]][,col],
+      hurs  = historical_data_basin_extract[["hurs"]][,col],
+      discharge_spec_obs = NA
+      )
 
 
     gauge_data <- old_data %>%
-      filter(object_id == gauge) %>%
-      bind_rows(new_data) %>%
-      mutate(time = paste0(time, " 00:00"),
-             pr = round(pr, 2),
-             tasmin  = round(tasmin, 2),
-             tasmax   = round(tasmax, 2),
-             hurs  = round(hurs, 2),
-             discharge_spec_obs = round(discharge_spec_obs, 2),)
+      dplyr::filter(object_id == gauge) %>%
+      dplyr::bind_rows(new_data) %>%
+      dplyr::mutate(time = paste0(time, " 00:00"),
+                    pr = round(pr, 2),
+                    tasmin  = round(tasmin, 2),
+                    tasmax   = round(tasmax, 2),
+                    hurs  = round(hurs, 2),
+                    discharge_spec_obs = round(discharge_spec_obs, 2),)
 
     if (gauge == gauge_id[1]){
-      fwrite(gauge_data, file = old_data_file, append = FALSE, quote = FALSE,
-             row.names = FALSE, col.names = TRUE)
+      data.table::fwrite(gauge_data, file = old_data_file, append = FALSE,
+                         quote = FALSE, row.names = FALSE, col.names = TRUE)
     } else {
-      fwrite(gauge_data, file = old_data_file, append = TRUE, quote = FALSE,
-             row.names = FALSE, col.names = FALSE)
-      }
+      data.table::fwrite(gauge_data, file = old_data_file, append = TRUE,
+                         quote = FALSE, row.names = FALSE, col.names = FALSE)
+    }
   }
 }

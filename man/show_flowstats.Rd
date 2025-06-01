@@ -14,8 +14,8 @@ Calling this functions will show the GUI of FlowStats
 }
 \examples{
 
-\donttest{
-FlowStats()
+\dontrun{
+show_flowstats()
 }
 
 }
