@@ -1,13 +1,7 @@
-
-#library(sf)
 library(leaflet)
+library(FlowStats)
 library(ggplot2)
 library(shiny)
-library(dplyr)
-library(plotly)
-library(lubridate)
-library(bslib)
-#library(data.table)
 
 setwd("C:/Users/nguyenta/Documents/GitHub/FlowStats/inst/FlowStats")
 
@@ -39,16 +33,16 @@ plot_streamflow <- function(input_data, gaugeid, plot_type, log_y){
   #gaugeid <-  "DE213680"
   #plot_type = "Daily (by year)"
   Q_gauge_id <- input_data %>%
-    filter(gauge_id == gaugeid)
+    dplyr::filter(gauge_id == gaugeid)
 
   # Plot daily
   if (plot_type == "Daily (by year)"){
     Q_daily_stat <- Q_gauge_id %>%
-      mutate(year = year(date),
-             month = month(date),
-             day = day(date)) %>%
-      group_by(month, day) %>%
-      summarise(
+      dplyr::mutate(year = lubridate::year(date),
+                    month = lubridate::month(date),
+                    day = lubridate::day(date)) %>%
+      dplyr::group_by(month, day) %>%
+      dplyr::summarise(
         Q_min = min(Q_cms),
         `Q_10%` = quantile(Q_cms, c(0.05)),
         `Q_25%` = quantile(Q_cms, c(0.25)),
@@ -65,13 +59,13 @@ plot_streamflow <- function(input_data, gaugeid, plot_type, log_y){
       theme(axis.title = element_text(size = 9))
   } else if (plot_type == "Daily cumsum (by year)"){
     Q_daily_stat_cumsum <- Q_gauge_id %>%
-      mutate(year = year(date),
-             month = month(date),
-             day = day(date)) %>%
-      group_by(year) %>%
-      mutate(Q_cms = cumsum(Q_cms))  %>%
-      group_by(month, day) %>%
-      summarise(
+      dplyr::mutate(year = lubridate::year(date),
+                    month = lubridate::month(date),
+                    day = lubridate::day(date)) %>%
+      dplyr::group_by(year) %>%
+      dplyr::mutate(Q_cms = cumsum(Q_cms))  %>%
+      dplyr::group_by(month, day) %>%
+      dplyr::summarise(
         Q_min = min(Q_cms),
         `Q_10%` = quantile(Q_cms, c(0.05)),
         `Q_25%` = quantile(Q_cms, c(0.25)),
@@ -83,7 +77,7 @@ plot_streamflow <- function(input_data, gaugeid, plot_type, log_y){
   }
 
   # Select data of current year
-  current_year <- year(tail(Q_gauge_id$date, 1))
+  current_year <- lubridate::year(tail(Q_gauge_id$date, 1))
   date <- seq.Date(as.Date(paste0(current_year, "-01-01")),
                    as.Date(paste0(current_year, "-12-31")), by = "days")
 
@@ -96,7 +90,7 @@ plot_streamflow <- function(input_data, gaugeid, plot_type, log_y){
   }
 
   if (plot_type == "Daily (by year)"){
-    Q_daily_stat <- Q_daily_stat %>% mutate(date = date, .before = 1)
+    Q_daily_stat <- Q_daily_stat %>% dplyr::mutate(date = date, .before = 1)
 
     plt <- ggplot(Q_daily_stat, aes(x = date)) +
       geom_ribbon(aes(ymin = Q_min, ymax = `Q_10%`),
@@ -110,8 +104,8 @@ plot_streamflow <- function(input_data, gaugeid, plot_type, log_y){
       geom_ribbon(aes(ymin = `Q_90%`, ymax = Q_max),
                   fill = "#276419", alpha = 0.6) +
       geom_line(data = Q_gauge_id %>%
-                  filter(year(date) == current_year) %>%
-                  rename(`Q_current_year` = Q_cms),
+                  dplyr::filter(lubridate::year(date) == current_year) %>%
+                  dplyr::rename(`Q_current_year` = Q_cms),
                 aes(x = date, y = `Q_current_year`), color = "blue") +
       labs(y = "Q (cms)", x = " ") +
       theme_bw() +
@@ -120,7 +114,7 @@ plot_streamflow <- function(input_data, gaugeid, plot_type, log_y){
 
   } else if (plot_type == "Daily cumsum (by year)"){
     Q_daily_stat_cumsum <- Q_daily_stat_cumsum %>%
-      mutate(date = date, .before = 1)
+      dplyr::mutate(date = date, .before = 1)
 
     plt <- ggplot(Q_daily_stat_cumsum, aes(x = date)) +
       geom_ribbon(aes(ymin = Q_min, ymax = `Q_10%`, fill = "Much below normal"),
@@ -134,8 +128,8 @@ plot_streamflow <- function(input_data, gaugeid, plot_type, log_y){
       geom_ribbon(aes(ymin = `Q_90%`, ymax = Q_max, fill = "Much above normal"),
                   alpha = 0.6) +
       geom_line(data = Q_gauge_id %>%
-                  filter(year(date) == current_year) %>%
-                  rename(`Q_current_year` = Q_cms),
+                  dplyr::filter(lubridate::year(date) == current_year) %>%
+                  dplyr::rename(`Q_current_year` = Q_cms),
                 aes(x = date, y = cumsum(`Q_current_year`)), color = "blue") +
       scale_fill_manual(values =  c("Much below normal" = "#D01C8B",
                                     "Below normal" = "#F1B6DA" ,
@@ -178,21 +172,21 @@ calculate_flowstats <- function(Q_input, period, gaugeid, fun){
 
 
   if(fun == "Q_last_day"){
-    Q_input_aggregate <- Q_input %>% rename(`Q_cms_aggregate` = Q_cms)
-    Q_input_year <- Q_input_aggregate %>% filter(date == period[1])
+    Q_input_aggregate <- Q_input %>% dplyr::rename(`Q_cms_aggregate` = Q_cms)
+    Q_input_year <- Q_input_aggregate %>% dplyr::filter(date == period[1])
 
   } else {
     Q_input_aggregate <- Q_input %>%
-      mutate(day_of_year = yday(date),
-             year = year(date)) %>%
-      filter(day_of_year >= yday(period[1]),
-             day_of_year <= yday(period[2])) %>%
-      group_by(gauge_id, year)  %>%
-      summarise(Q_cms_aggregate = agg_func(Q_cms),
-                .groups = 'drop')
+      dplyr::mutate(day_of_year = lubridate::yday(date),
+                    year = lubridate::year(date)) %>%
+      dplyr::filter(day_of_year >= lubridate::yday(period[1]),
+                    day_of_year <= lubridate::yday(period[2])) %>%
+      dplyr::group_by(gauge_id, year)  %>%
+      dplyr::summarise(Q_cms_aggregate = agg_func(Q_cms),
+                       .groups = 'drop')
 
     Q_input_year <- Q_input_aggregate %>%
-      filter(year == year(period[1]))
+      dplyr::filter(year == year(period[1]))
   }
 
   percentiles <- tibble(gauge_id = gaugeid, percentiles = NA)
@@ -208,8 +202,8 @@ calculate_flowstats <- function(Q_input, period, gaugeid, fun){
       iloc <- which(Q_input_year$gauge_id == gaugeid[i])
 
       temp <- Q_input_aggregate %>%
-        filter(gauge_id == gaugeid[i]) %>%
-        summarise(percentiles = 100*ecdf(Q_cms_aggregate)(
+        dplyr::filter(gauge_id == gaugeid[i]) %>%
+        dplyr::summarise(percentiles = 100*ecdf(Q_cms_aggregate)(
           Q_input_year$Q_cms_aggregate[iloc]))
 
       percentiles$percentiles[i] <- temp$percentiles
@@ -231,7 +225,7 @@ plot_flowstats <- function(Q_input, period, gaugeid, fun){
   #fun <- "Q_mean (daily)"
   #gaugeid = "DED11490"
 
-  Q_input <- Q_input %>% filter(gauge_id == gaugeid)
+  Q_input <- Q_input %>% dplyr::filter(gauge_id == gaugeid)
 
   if(fun == "Q_min (selected period)"){
     assign("agg_func", min)
@@ -245,17 +239,17 @@ plot_flowstats <- function(Q_input, period, gaugeid, fun){
 
 
   if(fun == "Q_last_day"){
-    Q_input_aggregate <- Q_input %>% rename(Q_cms_aggregate = Q_cms,
-                                            year = date)
+    Q_input_aggregate <- Q_input %>% dplyr::rename(Q_cms_aggregate = Q_cms,
+                                                   year = date)
   } else {
     Q_input_aggregate <- Q_input %>%
-      mutate(day_of_year = yday(date),
-             year = year(date)) %>%
-      filter(day_of_year >= yday(period[1]),
-             day_of_year <= yday(period[2])) %>%
-      group_by(gauge_id, year)  %>%
-      summarise(Q_cms_aggregate = agg_func(Q_cms),
-                .groups = 'drop')
+      dplyr::mutate(day_of_year = lubridate::yday(date),
+                    year = lubridate::year(date)) %>%
+      dplyr::filter(day_of_year >= lubridate::yday(period[1]),
+                    day_of_year <= lubridate::yday(period[2])) %>%
+      dplyr::group_by(gauge_id, year)  %>%
+      dplyr::summarise(Q_cms_aggregate = agg_func(Q_cms),
+                       .groups = 'drop')
   }
 
   Q_current_year <- tail(Q_input_aggregate, 1)
