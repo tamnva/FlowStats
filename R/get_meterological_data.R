@@ -15,7 +15,7 @@
 
 #' @examples
 #'
-#'\dontrun{
+#'\donttest{
 #' meterological_data <- get_meterological_data(years = NA, data_dir = NA)
 #' }
 #'
