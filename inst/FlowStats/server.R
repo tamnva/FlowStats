@@ -2,6 +2,11 @@
 
 function(input, output, session) {
 
+  # Stop the app when user close the browser
+  session$onSessionEnded(function(){
+    shiny::stopApp()
+  })
+
   #----------------------------------------------------------------------------#
   #                                Background map                              #
   #----------------------------------------------------------------------------#
