@@ -47,7 +47,7 @@ function(input, output, session) {
       leafletProxy("map") %>%
         clearShapes() %>%
         addCircleMarkers(data = stations,
-                         radius = 3,
+                         radius = 4,
                          group = "Station",
                          fillColor = pcolor,
                          fillOpacity = 0.8,
@@ -65,7 +65,7 @@ function(input, output, session) {
       leafletProxy("map") %>%
         clearShapes() %>%
         addCircleMarkers(data = stations,
-                         radius = 3,
+                         radius = 4,
                          group = "Station",
                          fillColor = "#492050",
                          fillOpacity = 0.6,
@@ -161,7 +161,7 @@ function(input, output, session) {
     leafletProxy("map") %>%
       clearShapes() %>%
       addCircleMarkers(data = stations,
-                 radius = 3,
+                 radius = 4,
                  group = "Station",
                  fillColor = pcolor,
                  fillOpacity = 0.8,
