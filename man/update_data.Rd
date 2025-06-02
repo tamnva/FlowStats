@@ -30,7 +30,7 @@ meterological data from Deutsche Wetterdienst
 }
 \examples{
 
-\dontrun{
+\donttest{
 old_data_file <- "your_path/time_series.csv"
 basins <- read_sf("your_path/de_basins.shp")
 update_data(old_data_file, basins, years = NA, data_dir = NA)
