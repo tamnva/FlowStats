@@ -36,7 +36,7 @@ function(input, output, session) {
   #                                User guide                                  #
   #----------------------------------------------------------------------------#
   output$user_guide <- renderText({
-    HTML(readLines("data/html/user_guide.html",
+    HTML(readLines(file.path('data', 'html', 'user_guide.html'),
                    warn = FALSE) |> paste(collapse = "\n"))
   })
 
@@ -82,7 +82,7 @@ function(input, output, session) {
   #                                Update data                                #
   #----------------------------------------------------------------------------#
   output$update_data <- renderText({
-    HTML(readLines("data/html/update_data.html",
+    HTML(readLines(file.path('data', 'html', 'update_data.html'),
                    warn = FALSE) |> paste(collapse = "\n"))
   })
 
@@ -93,7 +93,7 @@ function(input, output, session) {
 
     showModal(modalDialog(
       title = "Apply to all gauges",
-      HTML(readLines("data/html/message_plot_all_gauges.html",
+      HTML(readLines(file.path('data', 'html', 'message_plot_all_gauges.html'),
                      warn = FALSE) |> paste(collapse = "\n")),
       easyClose = TRUE
     ))
@@ -155,6 +155,8 @@ function(input, output, session) {
       pcolor <- pcolor(q_percentiles$percentiles)
       plabels <- c("Lowest","Much below normal", "Below normal", "Normal",
                    "Above normal", "Much above normal", "Highest")
+
+      #shiny::showModal(modalDialog(plotly::plotlyOutput("histogram_gauges"), size = "m"))
     }
 
 
@@ -242,11 +244,11 @@ function(input, output, session) {
 
   #------------------------------------------------Explain the single gauge plot
   observe({
-    req(input$plot_explaination)
-
+    req(input$plot_explanation)
+    print(getwd())
     showModal(modalDialog(
-      title = "Plot explaination",
-      HTML(readLines("data/html/plot_explaination.html",
+      title = "Plot explanation",
+      HTML(readLines(file.path('data', 'html', 'plot_explanation.html'),
                      warn = FALSE) |> paste(collapse = "\n")),
       easyClose = TRUE
     ))
@@ -255,11 +257,11 @@ function(input, output, session) {
 
   #---------------------------------------------------Explain the all gauge plot
   observe({
-    req(input$gauge_plot_explaination)
+    req(input$gauge_plot_explanation)
 
     showModal(modalDialog(
-      title = "Plot explaination",
-      HTML(readLines("data/html/gauge_plot_explaination.html",
+      title = "Plot explanation",
+      HTML(readLines("data/html/gauge_plot_explanation.html",
                      warn = FALSE) |> paste(collapse = "\n")),
       easyClose = TRUE
     ))

@@ -11,8 +11,9 @@
 #' @examples
 #'
 #'\donttest{
+#' basins <- read_sf("your_path/de_basins.shp")
 #' basin_data <- grid_to_basin(years = c(2024:2025), data_dir = tempdir(),
-#'                            basins)
+#'                            basins = basins)
 #' }
 
 #'

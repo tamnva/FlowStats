@@ -58,8 +58,8 @@ navbarPage(
               plotly::plotlyOutput("input_data", height = 220),
 
               tags$div(style="margin-bottom:30px; margin-top:10px;",
-                              actionButton('plot_explaination',
-                                           'Plot explaination')
+                              actionButton('plot_explanation',
+                                           'Plot explanation')
               ),
 
             ),
@@ -113,8 +113,8 @@ navbarPage(
                             actionButton('visualize_gauge',
                                          'Click to apply to all gauges')),
                      column(width = 6,
-                            actionButton('gauge_plot_explaination',
-                                         'Plot explaination')),
+                            actionButton('gauge_plot_explanation',
+                                         'Plot explanation')),
             ),),
         ),
       ),
