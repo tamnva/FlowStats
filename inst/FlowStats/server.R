@@ -17,12 +17,12 @@ function(input, output, session) {
       addProviderTiles(providers$Esri.WorldImagery,group = "WorldImagery") %>%
       addLayersControl(
         baseGroups = c("OpenStreetMap", "OpenTopoMap", "WorldImagery"),
-        overlayGroups = c("Subbasin", "Station", "Main basin"),
+        overlayGroups = c("Basin", "Gauge"),
         options = layersControlOptions(position = "bottomleft")
       )  %>%
       addCircleMarkers(data = stations,
                        radius = 3,
-                       group = "Station",
+                       group = "Gauge",
                        fillColor = pcolor,
                        fillOpacity = 0.8,
                        stroke = FALSE,
@@ -53,7 +53,7 @@ function(input, output, session) {
         clearShapes() %>%
         addCircleMarkers(data = stations,
                          radius = 4,
-                         group = "Station",
+                         group = "Gauge",
                          fillColor = pcolor,
                          fillOpacity = 0.8,
                          stroke = FALSE,
@@ -71,7 +71,7 @@ function(input, output, session) {
         clearShapes() %>%
         addCircleMarkers(data = stations,
                          radius = 4,
-                         group = "Station",
+                         group = "Gauge",
                          fillColor = "#492050",
                          fillOpacity = 0.6,
                          stroke = FALSE,
@@ -169,7 +169,7 @@ function(input, output, session) {
       clearShapes() %>%
       addCircleMarkers(data = stations,
                  radius = 4,
-                 group = "Station",
+                 group = "Gauge",
                  fillColor = pcolor,
                  fillOpacity = 0.8,
                  stroke = FALSE,
@@ -203,7 +203,7 @@ function(input, output, session) {
       leafletProxy("map") %>%
         addPolygons(
           data = subset(basins, gauge_id == input$map_marker_click$id),
-          group = "Subbasin",
+          group = "Basin",
           stroke = TRUE,
           weight = 2,
           layerId = "basin_shape_id")}
