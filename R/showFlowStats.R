@@ -8,7 +8,7 @@
 
 #' @examples
 #'
-#'\donttest{
+#'\dontrun{
 #' showFlowStats()
 #' }
 #'

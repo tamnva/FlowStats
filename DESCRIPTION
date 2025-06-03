@@ -4,9 +4,9 @@ Title: Near real time streamflow statistics for Germany
 Version: 0.0.1
 Author: Tam V. Nguyen
 Maintainer: Tam V. Nguyen <tamnva@gmail.com>
-Description: Near real time streamflow statistical analysis for Germany based on:
-    Near real time meterological data from German Weather Service
-    Deep learning (LSTM) rainfall runoff model for streamflow simulation
+Description: Near real time streamflow statistical analysis for Germany based on
+    near real time meterological data from German Weather Service and
+    Deep learning (LSTM) rainfall runoff model for streamflow simulation.
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2

@@ -215,13 +215,15 @@ function(input, output, session) {
     req(input$date_range)
     req(input$station_visual)
     req(input$map_marker_click)
-
+    print("this is outsidew")
     # Save project setting
     spsComps::shinyCatch(
       if (!is.null(input$map_marker_click$id) &
           input$navset == "All gauges" ){
-        plt <- plot_flowstats(Q_data, input$date_range, input$map_marker_click$id,
+        print("this is inside")
+        plt <- plot_gauge_stats(Q_data, input$date_range, input$map_marker_click$id,
                               input$station_visual)
+        print("this is still inside")
         output$plot_spatial <- plotly::renderPlotly({plotly::ggplotly(plt)})
       },
       blocking_level = "error"
@@ -239,7 +241,7 @@ function(input, output, session) {
 
     if (input$navset == "Single gauge"){
       if (!is.null(input$map_marker_click$id)){
-        plt <- plot_streamflow(Q_data, input$map_marker_click$id,
+        plt <- plot_timeseries(Q_data, input$map_marker_click$id,
                                input$plot_type, input$log_y)
         output$input_data <- plotly::renderPlotly({plotly::ggplotly(plt)})
       }
@@ -271,4 +273,5 @@ function(input, output, session) {
       easyClose = TRUE
     ))
   })
+
 }
