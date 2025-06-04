@@ -19,8 +19,14 @@ showFlowStats()
 
 ### FlowStats GUI
 
-The figure below shows the median streamflow in May 2025 compared to the mean streamflow in all years from 1980–2025. Many gauges had the lowest mean streamflow, while most other gauges fell into the “much below normal” category. Streamflow classification is adapted from the [USGS WaterWatch](https://waterwatch.usgs.gov/index.php?id=ww_current). The figure on the right panel shows the mean streamflow of the selected station in May 2025 and the mean streamflows of this station during the same period in other years.
+Figure 1 shows the mean streamflow in May 2025 compared to the mean streamflow in all years from 1980–2025 and mean streamflow in other months compared to all other months in all years. In May 2025, around 500 gauges had the lowest mean streamflow, while most other gauges fell into the “much below normal” category (Figures 1 & 2). Streamflow classification is adapted from the [USGS WaterWatch](https://waterwatch.usgs.gov/index.php?id=ww_current).
 
 <p align="center">
-  <img src="inst/FlowStats/data/monthly_report/May_2025.PNG" width=100% title="hover text">
+  <img src="inst/FlowStats/data/monthly_report/Mean_Q_May_2025.PNG" width=100% title="hover text">
 </p>
+**Figure 1**. Mean streamflow in May 2025 is compared to the mean streamflow in May across the years 1980–2025. The comparison is expressed in terms of percentiles, following [USGS classification scheme](https://waterwatch.usgs.gov/?id=ww_current).
+
+<p align="center">
+  <img src="inst/FlowStats/data/monthly_report/Monthly_Mean_Q.png" width=100% title="hover text">
+</p>
+**Figure 2**. Monthly mean streamflow compared to the mean streamflow of the corresponding months across the years 1980–2025. For example, the last column in this figure represents the mean streamflow in May 2025 compared to the mean streamflow in May of other years (1980–2025), as shown in Figure 1.
