@@ -1,0 +1,40 @@
+Package: FlowStats
+Type: Package
+Title: Near real time streamflow statistics for Germany
+Version: 0.0.2
+Author: Tam V. Nguyen
+Maintainer: Tam V. Nguyen <tamnva@gmail.com>
+Description: Near real time streamflow statistical analysis for Germany based on
+    near real time meterological data from German Weather Service and
+    Deep learning (LSTM) rainfall runoff model for streamflow simulation.
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+URL: https://github.com/tamnva/FlowStats
+BugReports: https://github.com/tamnva/FlowStats/issues
+Depends: R (>= 4.0)
+License: GPL (>= 3)
+Imports: 
+    magrittr (>= 2.0.3),
+    sf (>= 1.0-5),
+    leaflet (>= 2.0.4.1),
+    ggplot2 (>= 3.4.4),
+    shiny (>= 1.6.0),
+    dplyr (>= 1.1.2),
+    plotly (>= 4.10.4),
+    lubridate (>= 1.8.0),
+    bslib (>= 0.8.0),
+    data.table (>= 1.14.8),
+    exactextractr (>= 0.10.0),
+    terra (>= 1.5-17), 
+    readr (>= 2.1.2),
+    tibble (>= 3.2.1),
+    spsComps (>= 0.3.2.1),
+    tidyr (>= 1.3.1),
+    tidyselect (>= 1.2.1),
+    rlang (>= 1.1.4),
+    rdwd (>= 1.8.0)
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+SystemRequirements: Python executable files for streamflow simulation
