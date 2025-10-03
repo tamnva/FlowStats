@@ -1,0 +1,38 @@
+<p><strong>Procedure</strong>:</p>
+<ol>
+<li>First, select the period "Selected period" of interest to derive streamflow statistics.</li>
+<li>Then, select the smoothing technique "<em>N-day mean</em>". When this is applied, the streamflow value of date t is the mean of streamflow from day <em>t</em> to <em>t-n-1 </em>(for example, to calculate n day lowflow smoothing technique can be used). Incase n = 1, no smoothing technique is applied.</li>
+<li>Then, select which "<em>Streamflow statistic</em>" should be used, maximum, mean, or minimum streamflow during the "<em>Selected period</em>".</li>
+</ol>
+<p><strong>Color scheme</strong>: The streamflow values calculated above will be compared with streamflow data from the same period of each year between 1980 and the most recent year available (2025, as of this app’s development). Based on this comparison, streamflow quantiles will be calculated. Depending on the focus—flood, drought, or general conditions—these quantiles will be translated into corresponding verbal descriptions, as outlined below (<a href="https://waterwatch.usgs.gov/?id=ww_current">USGS WaterWatch)</a>:</p>
+<ul>
+<li>&nbsp;All<br />
+<ul>
+<li><span style="background-color: #024f03;">Highest: Highest value during the entire time<br /></span></li>
+<li><span style="background-color: #276419;">Above 90th percentile: Much above normal</span></li>
+<li><span style="background-color: #9cce64;">75th - 90th percentile: Above normal</span></li>
+<li><span style="background-color: #d0ebab;">25th - 75th percentiles: Normal</span></li>
+<li><span style="background-color: #f1b6da;">10th - 25th percentile: Below normal</span></li>
+<li><span style="background-color: #d01c8b;">Below 10th percentile: Much below normal</span></li>
+<li><span style="background-color: #851056;">Lowest: Lowest value during the entire time</span></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Flood<br />
+<ul>
+<li><span style="background-color: #276419;">Above 99th percentile: Extreme hydrologic flood<br /></span></li>
+<li><span style="background-color: #9cce64;">95th - 99th percentile: Servere hydrologic flood<br /></span></li>
+<li><span style="background-color: #ffffff;">Below 95th percentile: No flood</span></li>
+</ul>
+</li>
+<li>Drought<br />
+<ul>
+<li><span style="background-color: #ffffff;">Above 25th percentile: No drought<br /></span></li>
+<li><span style="background-color: #f1b6da;">10th - 25th percentile: Below normal<br /></span></li>
+<li><span style="background-color: #d01c8b;">5th - 10th percentile: Moderate hydrologic drought</span></li>
+<li><span style="background-color: #841859;">Below 5th percentile: Servere hydrologic drought</span></li>
+<li><span style="background-color: #661044;">Lowest: Extreme hydrologic drought</span></li>
+</ul>
+</li>
+</ul>
