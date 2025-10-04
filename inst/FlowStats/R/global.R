@@ -9,6 +9,7 @@ basins <- sf::read_sf(file.path("data", "de_basins.shp"))
 
 # Read simulated streamflow from LSTM
 Q_data <- readRDS(file.path("data", "lstm_data", "de_sim_discharge.rds"))
+
 last_day <- tail(Q_data$date, 1)
 
 # Default gauges coloring scheme
