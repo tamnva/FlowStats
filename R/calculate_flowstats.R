@@ -1,7 +1,7 @@
 #' Calculate streamflow statistic
 #'
 #' @param Q_input dataframe object, simulated or observed streamflow data, must
-#' contains the following columns "gauge_id", "date", "q_mm_day"
+#' contains the following column names "gauge_id", "date", "q_mm_day"
 #'
 #' @param n_day_mean smoothing the streamflow data using moving window, so the
 #' streamflow of day t is the average streamflow from day t-n-1 to t
@@ -18,6 +18,9 @@
 #' inside the shiny serve to display the processing time. Otherwise when users
 #' do not use the GUI, just set to FALSE
 #'
+#' @param flood_percentile logical variable, FALSE if this is for flood classification,
+#' otherwise TRUE
+#'
 #' @return a dataframe object, containing streamflow percentiles of the gaugeid
 
 #' @examples
@@ -33,6 +36,7 @@
 #' n_day_mean <- 10
 #' stat_function <- "Mean"
 #' gui <- FALSE
+#' flood_percentile <- FALSE
 #'
 #' # Get flow percentiles
 #' percentile <- calculate_flowstats(Q_input, select_period,
@@ -43,6 +47,7 @@
 #' @export
 #'
 #' @importFrom stats ecdf
+#' @importFrom utils setTxtProgressBar txtProgressBar
 
 calculate_flowstats <- function(Q_input, select_period , n_day_mean,
                                 stat_function, gui, flood_percentile = FALSE){

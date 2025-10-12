@@ -4,7 +4,10 @@
 <li>Then, select the smoothing technique "<em>N-day mean</em>". When this is applied, the streamflow value of date t is the mean of streamflow from day <em>t</em> to <em>t-n-1 </em>(for example, to calculate n day lowflow smoothing technique can be used). Incase n = 1, no smoothing technique is applied.</li>
 <li>Then, select which "<em>Streamflow statistic</em>" should be used, maximum, mean, or minimum streamflow during the "<em>Selected period</em>".</li>
 </ol>
-<p><strong>Color scheme</strong>: The streamflow values calculated above will be compared with streamflow data from the same period of each year between 1980 and the most recent year available (2025, as of this app’s development). Based on this comparison, streamflow quantiles will be calculated. Depending on the focus—flood, drought, or general conditions—these quantiles will be translated into corresponding verbal descriptions, as outlined below (<a href="https://waterwatch.usgs.gov/?id=ww_current">USGS WaterWatch)</a>:</p>
+<p><strong>Color scheme</strong>: The streamflow values calculated above will be compared with streamflow data of the same period of the years between 1980 and the most recent year available in the base dataset (e.g., 2025 as of this app’s development). Based on this comparison, streamflow quantiles will be calculated. Depending on the focus—flood, drought, or general conditions—these quantiles will be translated into corresponding verbal descriptions, as outlined below (<a href="https://waterwatch.usgs.gov/?id=ww_current">USGS WaterWatch)</a>:</p>
+
+<p><strong>Important</strong>: When the color scheme is "Flood", user just needs to select a single date, (no need to select "<em>N-day mean</em>" and "<em>Streamflow statistic</em>", then FlowStats will calculate streamflow percentile by comparing the streamflow of the selected date to all other daily streamflow values in the entire base dataset.
+
 <ul>
 <li>&nbsp;All<br />
 <ul>

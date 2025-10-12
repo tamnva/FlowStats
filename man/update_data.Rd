@@ -41,7 +41,7 @@ basins <- sf::read_sf(file.path(.libPaths(),"FlowStats", "FlowStats",
                                "data", "de_basins.shp"))
 
 # Update the data
-update_data(env_path, basins)
+update_data(env_path, basins, forecast = TRUE)
 
 # Here is the updated data file
 Q_data <- readRDS(file.path(.libPaths(), "FlowStats", "FlowStats","data",

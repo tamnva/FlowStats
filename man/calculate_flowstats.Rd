@@ -4,7 +4,14 @@
 \alias{calculate_flowstats}
 \title{Calculate streamflow statistic}
 \usage{
-calculate_flowstats(Q_input, select_period, n_day_mean, stat_function, gui)
+calculate_flowstats(
+  Q_input,
+  select_period,
+  n_day_mean,
+  stat_function,
+  gui,
+  flood_percentile = FALSE
+)
 }
 \arguments{
 \item{Q_input}{dataframe object, simulated or observed streamflow data, must
@@ -24,6 +31,9 @@ get Q latest day in the Q_input dataset}
 \item{gui}{logical variable, by default is TRUE to if this function is called
 inside the shiny serve to display the processing time. Otherwise when users
 do not use the GUI, just set to FALSE}
+
+\item{flood_percentile}{logical variable, FALSE if this is for flood classification,
+otherwise TRUE}
 }
 \value{
 a dataframe object, containing streamflow percentiles of the gaugeid
@@ -32,6 +42,7 @@ a dataframe object, containing streamflow percentiles of the gaugeid
 Calculate streamflow statistic
 }
 \examples{
+
 \dontrun{
 # Read data from FlowStats package
 Q_input <- readRDS(file.path(.libPaths(),"FlowStats", "FlowStats",
@@ -43,10 +54,12 @@ select_period <- c(as.Date("2025-05-01"), as.Date("2025-05-31"))
 n_day_mean <- 10
 stat_function <- "Mean"
 gui <- FALSE
+flood_percentile <- FALSE
 
 # Get flow percentiles
 percentile <- calculate_flowstats(Q_input, select_period,
                                   n_day_mean, stat_function, gui)
 
 }
+
 }
