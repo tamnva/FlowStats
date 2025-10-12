@@ -40,7 +40,13 @@
 plot_timeseries <- function(Q_input, gaugeid, plot_type, log_y){
 
   Q_gauge_id <- Q_input %>%
-    dplyr::filter(gauge_id == gaugeid)
+    dplyr::filter(gauge_id == gaugeid) #
+
+  # Fix issue while plotting 0 values in log scale
+  if (log_y == 1) {
+    Q_gauge_id <- Q_gauge_id %>%
+      dplyr::mutate(q_mm_day = ifelse(q_mm_day == 0, 0.01, q_mm_day))
+  }
 
   # Plot daily
   if (plot_type == "Daily (by year)"){

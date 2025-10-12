@@ -123,6 +123,45 @@ function(input, output, session) {
     }
   })
 
+  #----------------------------------------------------------------------------#
+  #             Reset other selections for flood percentile                    #
+  #----------------------------------------------------------------------------#
+  observeEvent(input$percentile_class, {
+    if (input$percentile_class == "Flood") {
+      shiny::updateNumericInput(session, "n_day_mean", " ", value = NA)
+      shiny::updateDateRangeInput(session,
+        "select_period", "Selected a date",
+        start = input$select_period[1],
+        end = input$select_period[1])
+      shiny::updateSelectInput(session, "stat_function",
+                               " ",
+                               list(" "))
+    } else {
+
+      shiny::updateDateRangeInput(
+        session, "select_period", "Selected period",
+        min = paste0(lubridate::year(last_day), "-01-01"),
+        max = last_day,
+        start = paste0(lubridate::year(last_day), "-01-01"),
+        end = last_day)
+
+      shiny::updateNumericInput(
+        session, "n_day_mean", "N-day mean", value = 1,
+        min = 1,max = 366, step = 1)
+
+      shiny::updateSelectInput(
+        session, "stat_function", "Streamflow statistic",
+        list("Mean", "Min","Max"))
+
+    }
+  })
+
+  observeEvent(input$select_period, {
+    if (input$percentile_class == "Flood") {
+      shiny::updateDateRangeInput(session, "select_period", "Selected a date",
+                                  end = input$select_period[1])
+    }
+  })
 
   #----------------------------------------------------------------------------#
   #                      Visualize all gauges                                  #
@@ -136,12 +175,23 @@ function(input, output, session) {
       easyClose = TRUE
     ))
 
-    q_percentiles <- calculate_flowstats(Q_data, input$select_period,
-                                         input$n_day_mean,
-                                         input$stat_function, TRUE) %>%
-      dplyr::select(gauge_id, percentiles)
+    if (input$percentile_class == "Flood") {
+      flood_percentile <- TRUE
+      shiny::updateNumericInput(session, "n_day_mean", "N-day mean", value = 1)
 
-    q_percentiles <- dplyr::left_join(stations, q_percentiles, by = "gauge_id")
+    } else {
+      flood_percentile <- FALSE
+    }
+
+    q_percentiles <- calculate_flowstats(Q_data,
+                                         input$select_period,
+                                         input$n_day_mean,
+                                         input$stat_function,
+                                         TRUE,
+                                         flood_percentile) %>%
+      dplyr::select(gauge_id, percentiles) %>%
+      dplyr::left_join(stations, by = "gauge_id")
+
     ptitle <- "Streamflow classification"
 
 
@@ -179,7 +229,6 @@ function(input, output, session) {
                    "Below normal",
                    "No drought")
     }
-
 
 
     leafletProxy("map") %>%
