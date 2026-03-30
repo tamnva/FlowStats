@@ -5,6 +5,8 @@
 - The LSTM model achieves a median NSE of 0.8 on the test period (2010–2020) across 1,566 basins in the [CAMELS-DE](https://essd.copernicus.org/articles/16/5625/2024/essd-16-5625-2024.html) dataset.
 - The simulated streamflow data (01.1980 - 8.2025) are used as default for statistical streamflow analyses (this data can be updated to get real time and forecast streamflow data).
 
+Citation: Duong, T.D., Tran, V.N. & Nguyen, T.V. Near-Real-Time Statistical Analysis and Visualization of Streamflow from a Deep-Learning Rainfall-Runoff Model. Water Resour Manage 40, 221 (2026). https://doi.org/10.1007/s11269-026-04602-6
+
 ### Installation
 
 ```R
