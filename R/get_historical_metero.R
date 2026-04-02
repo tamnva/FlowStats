@@ -35,7 +35,7 @@ get_historical_metero <- function(years = NA, data_dir = NA){
 
   base_link <- paste0("https://opendata.dwd.de/climate_environment/",
                       "CDC/grids_germany/daily/hyras_de")
-  file_name <- "_hyras_1_year_v6-0_de.nc"
+  file_name <- "_hyras_1_year_v6-1_de.nc"
 
   base_link_suffix <- c("precipitation", "air_temperature_min",
                         "air_temperature_max", "humidity")

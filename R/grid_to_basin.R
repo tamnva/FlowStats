@@ -25,7 +25,7 @@
 
 grid_to_basin <- function(years, data_dir, basins){
 
-  file_name <- "_hyras_1_year_v6-0_de.nc"
+  file_name <- "_hyras_1_year_v6-1_de.nc"
   file_name_prefix <- c("pr", "tasmin", "tasmax", "hurs")
 
   output <- list()
