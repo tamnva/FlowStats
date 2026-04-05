@@ -27,7 +27,7 @@ get_historical_metero <- function(years = NA, data_dir = NA){
 
   options(timeout=3600)
 
-  if (is.na(years[1)) years <- c(2024:lubridate::year(Sys.Date()))
+  if (is.na(years[1])) years <- c(2024:lubridate::year(Sys.Date()))
   if (is.na(data_dir)) {
     data_dir <- tempdir()
     message(paste0("Downloaded data is saved to: ", data_dir))
