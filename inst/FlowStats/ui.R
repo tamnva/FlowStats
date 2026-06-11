@@ -48,7 +48,7 @@ navbarPage(
             column(width = 12,
                    textInput("py_venv",
                              "Provide Python virtual environment",
-                             "C:/Users/nguyenta/AppData/Local/anaconda3/envs/hydro",
+                             "C:/Users/nguyenta/AppData/Local/anaconda3/envs/flowstats_env",
                              width = "100%"
                    ),
                    h4(),
