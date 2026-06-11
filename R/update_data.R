@@ -138,7 +138,9 @@ update_data <- function(env_path, basins, forecast){
   }
 
   # Save data
-  data.table::fwrite(time_series, file.path(lstm_data_dir, "time_series.csv"),
+  data.table::fwrite(time_series %>%
+                       dplyr::rename(id = object_id),
+                     file.path(lstm_data_dir, "time_series.csv"),
                      quote = FALSE, row.names = FALSE, col.names = TRUE)
 
   #----------------------------------------------------------------------------#
@@ -146,13 +148,13 @@ update_data <- function(env_path, basins, forecast){
   #----------------------------------------------------------------------------#
   message("Modifing the Python script...")
   # Change file path to the python script to the data path
-  run_lstm_script <-  readLines(file.path(lstm_data_dir,"run_lstm.py"), -1L)
-  run_lstm_script[12] <- paste0("lstm_data_dir = '", lstm_data_dir, "'")
-  writeLines(run_lstm_script, file.path(lstm_data_dir,"run_lstm.py"))
+  run_lstm_script <-  readLines(file.path(lstm_data_dir,"main.py"), -1L)
+  run_lstm_script[10] <- paste0("lstm_data_dir = '", lstm_data_dir, "'")
+  writeLines(run_lstm_script, file.path(lstm_data_dir,"main.py"))
 
   message("Running the LSTM model...")
   env_path <- file.path(env_path, "python.exe")
-  system(paste0(env_path, " ", file.path(lstm_data_dir, "run_lstm.py")))
+  system(paste0(env_path, " ", file.path(lstm_data_dir, "main.py")))
 
   #----------------------------------------------------------------------------#
   #                         Merge new data to old data                         #
@@ -164,6 +166,9 @@ update_data <- function(env_path, basins, forecast){
     file.path(lstm_data_dir, "de_sim_discharge_update.csv")
   ) %>%
     tibble::as_tibble() %>%
+    dplyr::rename(gauge_id = id,
+                  date = time,
+                  q_mm_day = discharge_spec_obs) %>%
     dplyr::mutate(date = as.Date(date),
                   year = lubridate::year(date),
                   day_of_year = lubridate::yday(date)) %>%
@@ -172,7 +177,8 @@ update_data <- function(env_path, basins, forecast){
   de_sim_discharge <- de_sim_discharge %>%
     dplyr::filter(date < de_sim_discharge_update$date[1]) %>%
     dplyr::bind_rows(de_sim_discharge_update) %>%
-    dplyr::arrange(gauge_id, date)
+    dplyr::arrange(gauge_id, date) %>%
+    dplyr::mutate(q_mm_day = pmax(q_mm_day, 0))
 
   saveRDS(de_sim_discharge, file.path(lstm_data_dir, "de_sim_discharge.rds"))
   message("The streamflow data was sucessfull updated")

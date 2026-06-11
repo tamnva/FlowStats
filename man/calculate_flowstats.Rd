@@ -15,7 +15,7 @@ calculate_flowstats(
 }
 \arguments{
 \item{Q_input}{dataframe object, simulated or observed streamflow data, must
-contains the following columns "gauge_id", "date", "q_mm_day"}
+contains the following column names "gauge_id", "date", "q_mm_day"}
 
 \item{select_period}{date vector with format "%Y-%m-%d", starting and ending
 date of of the period for calculating streamflow statistic}
