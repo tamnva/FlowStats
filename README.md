@@ -2,7 +2,7 @@
 [![DOI](https://zenodo.org/badge/993941012.svg)](https://doi.org/10.5281/zenodo.15571345) [![R-CMD-check](https://github.com/tamnva/FlowStats/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tamnva/FlowStats/actions/workflows/R-CMD-check.yaml)
 
 - This is an R package (with Graphical User Interface - GUI) for stream**Flow** visualization and **Stat**istical analyse**s** (real-time and forecast up to 5 day in advance) using the Long-Short-Term Memory (LSTM) rainfall-runoff model and meteorological data ([daily precipitation, temperature (min & max), and relative humidity](https://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/hyras_de/)) from the German Weather Service (DWD).
-- The LSTM model achieves a median NSE of 0.860 on the test period (2010–2020) across 1,566 basins in the [CAMELS-DE](https://essd.copernicus.org/articles/16/5625/2024/essd-16-5625-2024.html) dataset.
+- The LSTM model achieves a median NSE of 0.860 on the test period (2011–2020) across 1,566 basins in the [CAMELS-DE](https://essd.copernicus.org/articles/16/5625/2024/essd-16-5625-2024.html) dataset.
 - The simulated streamflow data (01.1980 - 4.2026) are used as default for statistical streamflow analyses (this data can be updated to get real time and forecast streamflow data). 
 
 Citation: Duong, T.D., Tran, V.N. & Nguyen, T.V. Near-Real-Time Statistical Analysis and Visualization of Streamflow from a Deep-Learning Rainfall-Runoff Model. Water Resour Manage 40, 221 (2026). https://doi.org/10.1007/s11269-026-04602-6
