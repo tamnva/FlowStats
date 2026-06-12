@@ -8,7 +8,11 @@ stations <- sf::read_sf(file.path("data", "de_stations.shp"))
 basins <- sf::read_sf(file.path("data", "de_basins.shp"))
 
 # Read simulated streamflow from LSTM
-Q_data <- readRDS(file.path("data", "lstm_data", "de_sim_discharge.rds"))
+Q_data <- readRDS(file.path("data", "lstm_data", "de_sim_discharge.rds")) %>%
+  tidyr::pivot_longer(cols = -date, values_to = "q_mm_day", names_to = "gauge_id") %>%
+  dplyr::mutate(year = lubridate::year(date),
+                day_of_year = lubridate::yday(date)) %>%
+  dplyr::arrange(gauge_id, date)
 
 last_day <- tail(Q_data$date, 1)
 

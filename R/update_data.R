@@ -160,7 +160,15 @@ update_data <- function(env_path, basins, forecast){
   #                         Merge new data to old data                         #
   #----------------------------------------------------------------------------#
   message("Updating the base discharge dataset with new data...")
-  de_sim_discharge <- readRDS(file.path(lstm_data_dir, "de_sim_discharge.rds"))
+  de_sim_discharge <- readRDS(
+    file.path(lstm_data_dir, "de_sim_discharge.rds")
+    ) %>%
+    tidyr::pivot_longer(cols = -date,
+                        values_to = "q_mm_day",
+                        names_to = "gauge_id") %>%
+    dplyr::mutate(year = lubridate::year(date),
+                  day_of_year = lubridate::yday(date)) %>%
+    dplyr::arrange(gauge_id, date)
 
   de_sim_discharge_update <- data.table::fread(
     file.path(lstm_data_dir, "de_sim_discharge_update.csv")
@@ -180,6 +188,12 @@ update_data <- function(env_path, basins, forecast){
     dplyr::arrange(gauge_id, date) %>%
     dplyr::mutate(q_mm_day = pmax(q_mm_day, 0))
 
-  saveRDS(de_sim_discharge, file.path(lstm_data_dir, "de_sim_discharge.rds"))
+  saveRDS(de_sim_discharge %>%
+            dplyr::select(c(gauge_id, date, q_mm_day)) %>%
+            tidyr::pivot_wider(id_cols = date,
+                        values_from = q_mm_day,
+                        names_from = gauge_id),
+          file.path(lstm_data_dir, "de_sim_discharge.rds"))
+
   message("The streamflow data was sucessfull updated")
 }
