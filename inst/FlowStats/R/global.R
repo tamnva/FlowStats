@@ -17,7 +17,7 @@ Q_data <- readRDS(file.path("data", "lstm_data", "de_sim_discharge.rds")) %>%
 last_day <- tail(Q_data$date, 1)
 
 # Default gauges coloring scheme
-color <- c("#F1B6DA", "#B8E186",  "#4D9221", "#276419")
+color <- c("#F54E75" ,"#F1B6DA" ,"#B8E186", "#276419")
 plabels <- c("Unsatisfactory (NSE < 0.5)",
              "Satisfactory (0.5 ≤ NSE < 0.65)",
              "Good (0.65 ≤ NSE < 0.75)",
